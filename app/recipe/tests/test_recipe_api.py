@@ -135,7 +135,8 @@ class PrivateRecipeAPITests(TestCase):
     def test_partial_update(self):
         """Test partial update of a recipe"""
         original_link = "https://example.com/recipe.pdf"
-        recipe = create_recipe(user=self.user, title="Sample recipe title", link=original_link)
+        recipe = create_recipe(
+            user=self.user, title="Sample recipe title", link=original_link)
 
         payload = {"title": "New recipe title"}
         url = detail_url(recipe.id)
@@ -307,7 +308,8 @@ class PrivateRecipeAPITests(TestCase):
         recipe = recipes[0]
         self.assertEqual(recipe.ingredients.count(), 2)
         for ingredient in payload["ingredients"]:
-            exists = recipe.ingredients.filter(name=ingredient["name"], user=self.user).exists()
+            exists = recipe.ingredients.filter(
+                name=ingredient["name"], user=self.user).exists()
             self.assertTrue(exists)
 
     def test_create_recipe_with_existing_ingredient(self):
@@ -375,7 +377,8 @@ class ImageUploadTests(TestCase):
 
     def setUp(self):
         self.client = APIClient()
-        self.user = get_user_model().objects.create_user("user@example.com", "password123")
+        self.user = get_user_model().objects.create_user(
+            "user@example.com", "password123")
         self.client.force_authenticate(self.user)
         self.recipe = create_recipe(user=self.user)
 
